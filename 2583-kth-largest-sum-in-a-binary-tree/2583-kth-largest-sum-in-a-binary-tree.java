@@ -14,27 +14,30 @@
  * }
  */
 class Solution {
-    public List<Long> maxLevelSum(TreeNode root) {
-        List<Long> list=new ArrayList<>();
-        Queue<TreeNode> q=new LinkedList<>();
-        q.offer(root);
-        while(!q.isEmpty()){
-            int len=q.size();
-            long sum=0;
-            while(len-- > 0){
-                TreeNode temp=q.poll();
-                sum+=temp.val;
-                if(temp.left!=null) q.offer(temp.left);
-                if(temp.right!=null) q.offer(temp.right);
-            }
-            list.add(sum);
-        }
-        return list;
-    }
     public long kthLargestLevelSum(TreeNode root, int k) {
-        List<Long> arr=maxLevelSum(root);
-        Collections.sort(arr);
-        if(arr.size()-k < 0) return -1;
-        return arr.get(arr.size()-k);
+        PriorityQueue<Long> pq = new PriorityQueue<>(Collections.reverseOrder());
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+
+        while (!q.isEmpty()) {
+            long sum = 0;
+            int size = q.size();
+            while (size-- > 0) {
+                TreeNode node = q.poll();
+                sum += node.val;
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+            pq.offer(sum);
+        }
+        if(pq.size()<k)return -1;
+        k=k-1;
+        while(k-- > 0) pq.poll();
+        return pq.peek();
     }
 }
+
+
+
+
+
