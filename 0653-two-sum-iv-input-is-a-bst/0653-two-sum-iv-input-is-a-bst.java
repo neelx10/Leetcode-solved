@@ -14,16 +14,22 @@
  * }
  */
 class Solution {
+    public void inorder(TreeNode root,List<Integer> nums) {
+        if (root == null) return;
+        inorder(root.left,nums);
+        nums.add(root.val);
+        inorder(root.right,nums);
+    }
+    
     public boolean findTarget(TreeNode root, int k) {
-        Set<Integer> set = new HashSet<>();
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        while (!q.isEmpty()) {
-            TreeNode curr = q.poll();
-            if (set.contains(k-curr.val)) return true;
-            set.add(curr.val);
-            if (curr.left != null) q.offer(curr.left);
-            if (curr.right != null) q.offer(curr.right);
+        List<Integer> nums=new ArrayList<>();
+        inorder(root,nums);
+        int l = 0, r = nums.size() - 1;
+        while (l < r) {
+            int sum = nums.get(l) + nums.get(r);
+            if (sum > k) r--;
+            else if (sum < k) l++;
+            else return true;
         }
         return false;
     }
