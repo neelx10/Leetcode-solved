@@ -3,7 +3,7 @@ class Solution {
     int[] dr={-1,0,1,0};
     int[] dc={0,1,0,-1};
     public int solve(int[][] grid,int row,int col,int m,int n,int[][] dp){
-        if(dp[row][col]!=-1) return dp[row][col];
+        if(dp[row][col]!=0) return dp[row][col];
         int count=1;
         for(int i=0;i<4;i++){
             int nrow=row+dr[i];
@@ -18,7 +18,6 @@ class Solution {
         int count=0;
         int m=grid.length,n=grid[0].length;
         int[][] dp=new int[m][n];
-        for(int[] r:dp) Arrays.fill(r,-1);
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 count=(count+solve(grid,i,j,m,n,dp)%mod)%mod;
