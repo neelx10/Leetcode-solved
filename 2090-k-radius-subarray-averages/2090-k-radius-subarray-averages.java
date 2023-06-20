@@ -5,14 +5,16 @@ class Solution {
         
         int[] avg=new int[n];
         Arrays.fill(avg,-1);
-        if(2*k+1>n) return avg;
+        int len=2*k+1;
+        if(len>n) return avg;
         
-        long[] prefix=new long[n+1];
-        for(int i=0;i<n;i++) prefix[i+1]=prefix[i]+nums[i];
-
-        for(int i=k;i<n-k;i++){
-            long sum=prefix[i+k+1]-prefix[i-k];
-            avg[i]=(int)(sum/(2*k+1));
+        long winSum=0;
+        for(int i=0;i<len;i++) winSum+=nums[i];
+        avg[k]=(int)(winSum/(2*k+1));
+        
+        for(int i=len;i<n;i++){
+            winSum=winSum+nums[i]-nums[i-2*k-1];
+            avg[i-k]=(int)(winSum/(2*k+1));
         }
         return avg;
     }
