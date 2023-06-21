@@ -1,13 +1,13 @@
 class Solution {
-    int counter=1;
-    public void dfs(int node,int parent,int[] visited,List<List<Integer>> adj,int[] timein,int[] low,List<List<Integer>> bridges){
+    public void dfs(int node,int parent,int[] visited,List<List<Integer>> adj,int[] timein,int[] low,List<List<Integer>> bridges,int counter){
+        //tarjan's algorithm
         visited[node]=1;
         timein[node]=low[node]=counter;
         counter++;
         for(int it:adj.get(node)){
             if(it==parent) continue;
             if(visited[it]==0){
-                dfs(it,node,visited,adj,timein,low,bridges);
+                dfs(it,node,visited,adj,timein,low,bridges,counter);
                 low[node]=Math.min(low[node],low[it]);
                 if(low[it]>timein[node]) bridges.add(Arrays.asList(it,node));
             }
@@ -25,7 +25,7 @@ class Solution {
         int[] timein=new int[n];
         int[] low=new int[n];
         List<List<Integer>> bridges=new ArrayList<>();
-        dfs(0,-1,visited,adj,timein,low,bridges);
+        dfs(0,-1,visited,adj,timein,low,bridges,1);
         return bridges;
     }
 }
