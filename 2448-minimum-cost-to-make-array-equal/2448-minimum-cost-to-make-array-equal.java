@@ -20,6 +20,6 @@ class Solution {
             if(cost2>cost1) end=mid-1;
             else start=mid+1;
         }
-        return (ans==1e9)?0:ans;
+        return ans;
     }
 }
