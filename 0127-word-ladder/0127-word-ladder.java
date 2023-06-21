@@ -11,7 +11,6 @@ class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         Queue<Pair> q=new LinkedList<>();
         q.offer(new Pair(1,beginWord));
-        wordList.remove(beginWord);
         Set<String> set=new HashSet<>();
         for(int i=0;i<wordList.size();i++) set.add(wordList.get(i));
         set.remove(beginWord);
