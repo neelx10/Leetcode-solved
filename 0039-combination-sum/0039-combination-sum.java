@@ -5,6 +5,7 @@ class Solution {
             ans.add(new ArrayList<>(list));
             return;
         }
+        if(target<0) return;
         if(arr[i]<=target){
             list.add(arr[i]);
             fun(i,target-arr[i],arr,ans,list);
