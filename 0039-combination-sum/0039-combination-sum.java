@@ -1,10 +1,10 @@
 class Solution {
     public void fun(int i,int target,int[] arr,List<List<Integer>> ans,List<Integer> list){
+        if(i==arr.length) return;
         if(target==0){
             ans.add(new ArrayList<>(list));
             return;
         }
-        if(i==arr.length) return;
         if(arr[i]<=target){
             list.add(arr[i]);
             fun(i,target-arr[i],arr,ans,list);
