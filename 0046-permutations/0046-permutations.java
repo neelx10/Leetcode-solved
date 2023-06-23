@@ -1,30 +1,23 @@
 class Solution {
-    public void swap(int[] nums,int i,int j){
-        int temp=nums[i];
-        nums[i]=nums[j];
-        nums[j]=temp;
-    }
-
-    public void perm(int pointer,List<List<Integer>> ans,int[] nums){
-        if(pointer==nums.length){
-            List<Integer> al = new ArrayList<Integer>();
-            for(int i:nums) al.add(i);
-            ans.add(al);
+    public void solve(List<List<Integer>> ans,List<Integer> list,int[] nums,int[] visited){
+        if(list.size()==nums.length){
+            ans.add(new ArrayList<>(list));
             return;
         }
-
-        for(int i=pointer;i<nums.length;i++){
-            swap(nums,i,pointer);
-            perm(pointer+1,ans,nums);
-            swap(nums,i,pointer);
+        for(int i=0;i<nums.length;i++){
+            if(visited[i]==0){
+                visited[i]=1;
+                list.add(nums[i]);
+                solve(ans,list,nums,visited);
+                list.remove(list.size()-1);
+                visited[i]=0;
+            }
         }
     }
-
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans=new ArrayList<>();
-        perm(0,ans,nums);
+        int[] visited=new int[nums.length];
+        solve(ans,new ArrayList<>(),nums,visited);
         return ans;
     }
 }
-
-
