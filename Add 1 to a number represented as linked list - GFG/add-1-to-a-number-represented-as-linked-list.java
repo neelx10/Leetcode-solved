@@ -79,29 +79,32 @@ class Solution
     { 
         //code here.
         head=reverseList(head);
+        
         Node dummy = new Node(0); 
         Node temp = dummy;
+        
         Node temp1=head;
         int carry = 0;
         int sum=temp1.data+1;
+        temp1=temp1.next;
         carry=sum/10;
         Node start=new Node(sum%10);
         temp.next=start;
         temp=temp.next;
-        temp1=temp1.next;
+        
         while(temp1!=null || carry==1){
-            int ans=0;
+            sum=0;
             if(temp1!=null){
-                ans+=temp1.data;
+                sum+=temp1.data;
                 temp1=temp1.next;
             }
-            ans+=carry;
-            carry=ans/10;
-            Node newNode=new Node(ans%10);
+            sum+=carry;
+            carry=sum/10;
+            Node newNode=new Node(sum%10);
             temp.next=newNode;
             temp=temp.next;
         }
-        Node rev=reverseList(dummy.next);
-        return rev;
+        
+        return reverseList(dummy.next);
     }
 }
