@@ -78,49 +78,41 @@ class Node
 class Solution
 {
     //Function to sort a linked list of 0s, 1s and 2s.
-    static Node mergeTwoLists(Node list1, Node list2) {
-        if(list1==null) return list2;
-        if(list2==null) return list1;
-        if(list1.data>list2.data){
-            Node temp=list1;
-            list1=list2;
-            list2=temp;
-        }
-        Node res=list1;
-        while(list1!=null && list2!=null){
-            Node temp=null;
-            while(list1!=null && list1.data<=list2.data){
-                temp=list1;
-                list1=list1.next;
-            }
-            temp.next=list2;
-            //swapping
-            Node tmp=list1;
-            list1=list2;
-            list2=tmp;
-        }
-        return res;
-    }
-    
     static Node segregate(Node head)
     {
         // add your code here
-        if(head==null || head.next==null) return head;
-        //finding middle of LL
-        Node temp=null,slow=head,fast=head;
-        while(fast!=null && fast.next!=null){
-            temp=slow;
-            slow=slow.next;
-            fast=fast.next.next;
+        if (head == null || head.next == null)
+            return head;
+
+        Node zeroHead = new Node(0);
+        Node oneHead = new Node(0);
+        Node twoHead = new Node(0);
+        Node zeroTail = zeroHead;
+        Node oneTail = oneHead;
+        Node twoTail = twoHead;
+
+        Node curr = head;
+
+        while (curr != null) {
+            if (curr.data == 0) {
+                zeroTail.next = curr;
+                zeroTail = zeroTail.next;
+            } else if (curr.data == 1) {
+                oneTail.next = curr;
+                oneTail = oneTail.next;
+            } else {
+                twoTail.next = curr;
+                twoTail = twoTail.next;
+            }
+
+            curr = curr.next;
         }
-        temp.next=null;
-        
-        //recursive calls
-        Node l1=segregate(head);
-        Node l2=segregate(slow);
-        
-        //merging the 2 sorted LL's
-        return mergeTwoLists(l1,l2);
+
+        zeroTail.next = (oneHead.next==null)?twoHead.next:oneHead.next;
+        oneTail.next = twoHead.next;
+        twoTail.next = null;
+
+        return zeroHead.next;
     }
 }
 
