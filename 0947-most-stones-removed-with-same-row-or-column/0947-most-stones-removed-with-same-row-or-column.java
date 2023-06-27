@@ -58,17 +58,10 @@ class Solution {
             maxCol=Math.max(maxCol,stone[1]);
         }
         DisjointSet ds=new DisjointSet(maxRow+maxCol+1);
-        Set<Integer> set=new HashSet<>();
-        for(int[] stone:stones){
-            int row=stone[0],col=stone[1]+maxRow+1;
-            ds.unionByRank(row,col);
-            set.add(row);
-            set.add(col);
+        for(int[] stone:stones) ds.unionBySize(stone[0],stone[1]+maxRow+1);
+        for(int i=0;i<(maxRow+maxCol+1);i++){
+            if(ds.parent.get(i)==i && ds.size.get(i)>1) n--;
         }
-        int count=0;
-        for(int node:set){
-            if(ds.findUPar(node)==node) count++;
-        }
-        return n-count;
+        return n;
     }
 }
