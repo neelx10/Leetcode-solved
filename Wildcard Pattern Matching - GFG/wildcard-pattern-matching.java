@@ -23,28 +23,42 @@ class WildcardPattern
 
 class Solution
 {
-    int solve(int ind1,int ind2, String s1, String s2,int[][] dp){
-        if(ind1==0 && ind2==0) return 1;
-        if(ind1==00 && ind2>0) return 0;
-        if(ind1>0 && ind2==0){
-            for(int it=0;it<=ind1-1;it++) if(s1.charAt(it)!='*') return 0;
-            return 1;
+    boolean isAllStars(String S1, int i) {
+        for (int j = 1; j <= i; j++){
+          if (S1.charAt(j - 1) != '*') return false;
         }
-        if(dp[ind1][ind2]!=-1) return dp[ind1][ind2];
-        if(s1.charAt(ind1-1)==s2.charAt(ind2-1) || s1.charAt(ind1-1)=='?') return dp[ind1][ind2]=solve(ind1-1,ind2-1,s1,s2,dp);
-        else if(s1.charAt(ind1-1)=='*'){
-            return dp[ind1][ind2]=(solve(ind1-1,ind2,s1,s2,dp)==1 || solve(ind1,ind2-1,s1,s2,dp)==1)?1:0;
-        }
-        else return dp[ind1][ind2]=0;
+        return true;
     }
     
-    int wildCard(String pattern, String str)
+    int wildCard(String s1, String s2)
     {
         // Your code goes here
-        int m=pattern.length();
-        int n=str.length();
+        int m=s1.length();
+        int n=s2.length();
         int[][] dp=new int[m+1][n+1];
-        for(int[] row:dp) Arrays.fill(row,-1);
-        return solve(m,n,pattern,str,dp);
+        
+        dp[0][0]=1;
+        for(int ind1=1;ind1<=m;ind1++) dp[ind1][0]=(isAllStars(s1,ind1))?1:0;
+
+        for(int ind1=1;ind1<=m;ind1++){
+            for(int ind2=1;ind2<=n;ind2++){
+                if(s1.charAt(ind1-1)==s2.charAt(ind2-1) || s1.charAt(ind1-1)=='?') dp[ind1][ind2]=dp[ind1-1][ind2-1];
+                else if(s1.charAt(ind1-1)=='*') dp[ind1][ind2]=(dp[ind1-1][ind2]==1 || dp[ind1][ind2-1]==1)?1:0;
+                else dp[ind1][ind2]=0;
+            }
+        }
+        return dp[m][n];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
