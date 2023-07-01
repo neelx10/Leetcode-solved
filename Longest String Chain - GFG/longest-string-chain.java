@@ -103,16 +103,14 @@ class Solution{
 
     public int longestChain(int N, String words[]){
      //code here
-        Arrays.sort(words,Comparator.comparing(s->s.length()));
+        Arrays.sort(words,(a,b)->a.length()-b.length());
         int n=words.length;
         int[] dp=new int[n];
-        Arrays.fill(dp,1);
         int ans=1;
-        for(int ind=1;ind<n;ind++){
+        for(int ind=0;ind<n;ind++){
+            dp[ind]=1;
             for(int prev=0;prev<ind;prev++){
-                if(isValid(words[ind],words[prev])==true && 1+dp[prev]>dp[ind]){
-                    dp[ind]=1+dp[prev];
-                }
+                if(isValid(words[ind],words[prev])==true && 1+dp[prev]>dp[ind]) dp[ind]=1+dp[prev];
                 ans=Math.max(dp[ind],ans);
             }
         }
