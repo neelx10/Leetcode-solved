@@ -31,22 +31,18 @@ class Solution{
         return true;
     }
     
-    static int solve(int i,String str,int n,int[] dp){
-        if(i==n) return 0;
-        if(dp[i]!=-1) return dp[i];
-        int minSum=(int)1e9;
-        for(int ind=i;ind<n;ind++){
-            if(isPalindrome(i,ind,str)) minSum=Math.min(minSum,1+solve(ind+1,str,n,dp));
-        }
-        return dp[i]=minSum;
-    }
-    
     static int palindromicPartition(String str)
     {
         // code here
         int n=str.length();
-        int[] dp=new int[n];
-        Arrays.fill(dp,-1);
-        return solve(0,str,n,dp)-1;
+        int[] dp=new int[n+1];
+        for(int i=n-1;i>=0;i--){
+            int minSum=(int)1e9;
+            for(int ind=i;ind<n;ind++){
+                if(isPalindrome(i,ind,str)) minSum=Math.min(minSum,1+dp[ind+1]);
+            }
+            dp[i]=minSum;
+        }
+        return dp[0]-1;
     }
 }
