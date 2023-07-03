@@ -54,11 +54,11 @@ class Solution {
                 if(a[ind]%a[prev]==0 && 1+dp[prev]>dp[ind]){
                      dp[ind]=1+dp[prev];
                      hash[ind]=prev;
-                     if(dp[ind]>maxi){
-                        maxi=Math.max(maxi,dp[ind]);
-                        lastind=ind;
-                    }
                 }
+            }
+            if(dp[ind]>maxi){
+                maxi=dp[ind];
+                lastind=ind;
             }
         }
         
