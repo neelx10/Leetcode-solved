@@ -40,20 +40,14 @@ class Solution
         // Your code here
         if(str1.length()!=str2.length()) return false;
         Map<Character,Character> map=new HashMap<>();
-        Set<Character> set=new HashSet<>();
         for(int i=0;i<str1.length();i++){
             char ch1=str1.charAt(i);
             char ch2=str2.charAt(i);
             if(map.containsKey(ch1)){
                 if(map.get(ch1)!=ch2) return false;
             }
-            else{
-                if(set.contains(ch2)) return false;
-                else{
-                    map.put(ch1,ch2);
-                    set.add(ch2);
-                }
-            }
+            else if(map.containsValue(ch2)) return false;
+            else map.put(ch1,ch2);
         }
         return true;
     }
