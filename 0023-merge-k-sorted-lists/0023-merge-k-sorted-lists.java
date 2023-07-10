@@ -28,10 +28,17 @@ class Solution {
         return res.next;
     }
     
+    ListNode mergeSort(ListNode lists[],int low,int high){
+        if(low==high) return lists[low];
+        if(low>high) return null;
+        int mid=low+(high-low)/2;
+        ListNode left=mergeSort(lists,low,mid);
+        ListNode right=mergeSort(lists,mid+1,high);
+        return mergeTwoLists(left,right);
+    }
+    
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists.length==0) return null;
-        ListNode head=lists[0];
-        for(int i=1;i<lists.length;i++) head=mergeTwoLists(head,lists[i]);
-        return head;
+        return mergeSort(lists,0,lists.length-1);
     }
 }
