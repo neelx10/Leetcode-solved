@@ -1,13 +1,18 @@
 class Solution {
     public int jump(int[] nums) {
-        int n=nums.length;
-        int[] dp=new int[n];
-        Arrays.fill(dp,(int)1e9);
-        dp[n-1]=0;
-        for(int ind=n-2;ind>=0;ind--){
-            for(int i=1;i<=nums[ind] && ind+i<n ;i++) dp[ind]=Math.min(dp[ind],1+dp[ind+i]);
+        int n = nums.length;
+        int jumps = 0;
+        int currEnd = 0;
+        int currFarthest = 0;
+        for (int i = 0; i < n - 1; i++) {
+            currFarthest = Math.max(currFarthest, i + nums[i]);
+            if (i == currEnd) {
+                jumps++;
+                currEnd = currFarthest;
+                if (currEnd >= n - 1) break;
+            }
         }
-        return dp[0];
+        return jumps;
     }
 }
 
