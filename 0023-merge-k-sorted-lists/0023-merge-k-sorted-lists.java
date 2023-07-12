@@ -9,36 +9,22 @@
  * }
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode temp=new ListNode(0);
-        ListNode res=temp;
-        while(l1!=null && l2!=null){
-            if(l1.val<=l2.val){
-                temp.next=l1;
-                l1=l1.next;
-            }
-            else{
-                temp.next=l2;
-                l2=l2.next;
-            }
-            temp=temp.next;
-        }
-        if(l1==null) temp.next=l2;
-        if(l2==null) temp.next=l1;
-        return res.next;
-    }
-    
-    ListNode mergeSort(ListNode lists[],int low,int high){
-        if(low==high) return lists[low];
-        if(low>high) return null;
-        int mid=low+(high-low)/2;
-        ListNode left=mergeSort(lists,low,mid);
-        ListNode right=mergeSort(lists,mid+1,high);
-        return mergeTwoLists(left,right);
-    }
-    
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists.length==0) return null;
-        return mergeSort(lists,0,lists.length-1);
+        if(lists == null || lists.length == 0) return null;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> (a.val - b.val));
+        for(ListNode list : lists) {
+            if(list != null) pq.offer(list);
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        ListNode cur = dummy;
+        
+        while(!pq.isEmpty()) {
+            ListNode node = pq.poll();
+            cur.next = node;
+            if(node.next != null) pq.offer(node.next);
+            cur = cur.next;
+        }
+        return dummy.next;
     }
 }
