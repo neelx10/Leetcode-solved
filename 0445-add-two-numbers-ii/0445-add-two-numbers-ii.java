@@ -9,45 +9,33 @@
  * }
  */
 class Solution {
-    public ListNode reverseList(ListNode head) {
-        ListNode curr=head,th=null;
-        while(curr!=null){
-            ListNode fw=curr.next;
-            curr.next=null;
-            if(th==null) th=curr;
-            else{
-                curr.next=th;
-                th=curr;
-            }
-            curr=fw;
-        }
-        return th;
-    }
-    
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        l1=reverseList(l1);
-        l2=reverseList(l2);
-        ListNode dummy = new ListNode(); 
-        ListNode temp = dummy; 
-        int carry = 0;
-        while( l1 != null || l2 != null || carry == 1) {
-            int sum = 0; 
-            if(l1 != null) {
-                sum += l1.val; 
-                l1 = l1.next; 
-            }
-            
-            if(l2 != null) {
-                sum += l2.val; 
-                l2 = l2.next; 
-            }
-            
-            sum += carry; 
-            carry = sum / 10; 
-            ListNode node = new ListNode(sum % 10); 
-            temp.next = node; 
-            temp = temp.next; 
+        Stack<ListNode> st1=new Stack<>();
+        Stack<ListNode> st2=new Stack<>();
+        while(l1!=null){
+            st1.push(l1);
+            l1=l1.next;
         }
-        return reverseList(dummy.next);
+        while(l2!=null){
+            st2.push(l2);
+            l2=l2.next;
+        }
+        
+        ListNode dummy=new ListNode(-1);
+        int carry=0;
+        while(!st1.isEmpty() || !st2.isEmpty() || carry==1){
+            int sum=0;
+            if(!st1.isEmpty()) sum+=st1.pop().val;
+            if(!st2.isEmpty()) sum+=st2.pop().val;
+            sum+=carry;
+            carry=sum/10;
+            ListNode newNode=new ListNode(sum%10);
+            if(dummy.val==-1) dummy=newNode;
+            else{
+                newNode.next=dummy;
+                dummy=newNode;
+            }
+        }
+        return dummy;
     }
 }
