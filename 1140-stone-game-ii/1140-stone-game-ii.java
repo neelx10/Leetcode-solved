@@ -1,7 +1,7 @@
 class Solution {
     public int solveOnlyForAlice(int[] piles,int whoseTurn,int i,int M,int n,int[][][] dp){
         if(i==n) return 0;
-        if(dp[whoseTurn][i][M]!=0) return dp[whoseTurn][i][M];
+        if(dp[whoseTurn][i][M]!=-1) return dp[whoseTurn][i][M];
         int stones=0;
         int result=(int)1e9;
         if(whoseTurn==1) result=-(int)1e9;
@@ -16,9 +16,9 @@ class Solution {
     public int stoneGameII(int[] piles) {
         int n=piles.length;
         int[][][] dp=new int[2][n+1][n+1];
-        // for(int[][] r:dp){
-        //     for(int[] rr:r) Arrays.fill(rr,-1);
-        // }
+        for(int[][] r:dp){
+            for(int[] rr:r) Arrays.fill(rr,-1);
+        }
         return solveOnlyForAlice(piles,1,0,1,n,dp);
     }
 }
