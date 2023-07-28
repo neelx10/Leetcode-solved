@@ -1,10 +1,13 @@
 class Solution {
-    public int solve(int[] nums,int i,int j,int n){
+    public int solve(int[] nums,int i,int j,int n,int[][] dp){
         if(i==j) return nums[i];
-        return Math.max(nums[i]-solve(nums,i+1,j,n),nums[j]-solve(nums,i,j-1,n));
+        if(dp[i][j]!=-1) return dp[i][j];
+        return dp[i][j]=Math.max(nums[i]-solve(nums,i+1,j,n,dp),nums[j]-solve(nums,i,j-1,n,dp));
     }
     public boolean PredictTheWinner(int[] nums) {
         int n=nums.length;
-        return solve(nums,0,n-1,n)>=0;
+        int[][] dp=new int[n][n];
+        for(int[] r:dp) Arrays.fill(r,-1);
+        return solve(nums,0,n-1,n,dp)>=0;
     }
 }
