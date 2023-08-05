@@ -56,7 +56,7 @@ class Solution {
         int[] distance=new int[V];
         Arrays.fill(distance,(int)1e8);
         distance[S]=0;
-        for(int i=1;i<V;i++){
+        for(int i=0;i<V;i++){
             for(ArrayList<Integer> it:edges){
                 int u=it.get(0),v=it.get(1),wt=it.get(2);
                 if(wt+distance[u]<distance[v]) distance[v]=wt+distance[u];
