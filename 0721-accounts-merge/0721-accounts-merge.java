@@ -9,30 +9,20 @@ class DisjointSet {
     }
 
     public int findUPar(int node) {
-        if(node == parent.get(node)) {
-            return node; 
-        }
-        int ulp = findUPar(parent.get(node)); 
-        parent.set(node, ulp); 
+        if(node == parent.get(node)) return node; 
+        parent.set(node, findUPar(parent.get(node))); 
         return parent.get(node); 
     }
 
     public void unionByRank(int u, int v) {
         int ulp_u = findUPar(u); 
         int ulp_v = findUPar(v); 
-        if(ulp_u == ulp_v){
-            return; 
-        }
-        if(rank.get(ulp_u) < rank.get(ulp_v)) {
-            parent.set(ulp_u, ulp_v); 
-        }
-        else if(rank.get(ulp_v) < rank.get(ulp_u)) {
-            parent.set(ulp_v, ulp_u); 
-        }
+        if(ulp_u == ulp_v) return; 
+        if(rank.get(ulp_u) < rank.get(ulp_v)) parent.set(ulp_u, ulp_v); 
+        else if(rank.get(ulp_v) < rank.get(ulp_u)) parent.set(ulp_v, ulp_u); 
         else {
             parent.set(ulp_v, ulp_u); 
-            int rankU = rank.get(ulp_u); 
-            rank.set(ulp_u, rankU + 1); 
+            rank.set(ulp_u, rank.get(ulp_u) + 1); 
         }
     }
 }
@@ -52,17 +42,16 @@ class Solution {
         
         List<List<String>> merged=new ArrayList<>();
         for(int i=0;i<n;i++) merged.add(new ArrayList<String>());
-        for(String mail:map.keySet()){
-            int node=ds.findUPar(map.get(mail));
-            merged.get(node).add(mail);
-        }
+        for(String mail:map.keySet()) merged.get(ds.findUPar(map.get(mail))).add(mail);
 
+        
         List<List<String>> ans=new ArrayList<>();
         for(int i=0;i<n;i++){
-            if(merged.get(i).size()==0) continue;
-            Collections.sort(merged.get(i));
-            merged.get(i).add(0,accounts.get(i).get(0));
-            ans.add(merged.get(i));
+            if(merged.get(i).size()!=0){
+                Collections.sort(merged.get(i));
+                merged.get(i).add(0,accounts.get(i).get(0));
+                ans.add(merged.get(i));
+            }
         }
         return ans;
     }
