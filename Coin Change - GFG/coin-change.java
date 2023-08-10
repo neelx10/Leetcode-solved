@@ -25,21 +25,18 @@ class GfG {
 // User function Template for Java
 
 class Solution {
-    public long ways(int ind,int target,int[] coins,long[][] dp){
-        if(ind==0){
-            if(target%coins[ind]==0) return 1;
-            else return 0;
-        }
-        if(dp[ind][target]!=-1) return dp[ind][target];
-        long notTake=ways(ind-1,target,coins,dp);
-        long take=0;
-        if(coins[ind]<=target) take=ways(ind,target-coins[ind],coins,dp);
-        return dp[ind][target]=take+notTake;
-    }
     public long count(int coins[], int n, int amount) {
         // code here.
-        long[][] dp=new long[n][amount+1];
-        for(long[] row:dp) Arrays.fill(row,-1);
-        return ways(n-1,amount,coins,dp);
+        long[] prev=new long[amount+1];
+        prev[0]=1;
+        for(int i=0;i<n;i++){
+            for(int tar=0;tar<=amount;tar++){
+                long notTake=prev[tar];
+                long take=0;
+                if(coins[i]<=tar) take=prev[tar-coins[i]];
+                prev[tar]=take+notTake;
+            }
+        }
+        return prev[amount];
     }
 }
