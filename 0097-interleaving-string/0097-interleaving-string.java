@@ -2,10 +2,10 @@ class Solution {
     private boolean check(char[] s1, char[] s2, char[] s3, int i, int j,int m,int n,int N,Boolean[][] dp) {
         if (i+j == N) return (i == m && j == n);
         if (dp[i][j] != null) return dp[i][j];
-        boolean option1 = false, option2 = false;
-        if (i < m && s1[i] == s3[i+j]) option1 = check(s1, s2, s3, i + 1, j, m, n, N, dp);
-        if (j < n && s2[j] == s3[i+j]) option2 = check(s1, s2, s3, i, j + 1, m, n, N, dp);
-        return dp[i][j] = option1 || option2;
+        boolean flag1 = false, flag2 = false;
+        if (i < m && s1[i] == s3[i+j]) flag1 = check(s1, s2, s3, i + 1, j, m, n, N, dp);
+        if (j < n && s2[j] == s3[i+j]) flag2 = check(s1, s2, s3, i, j + 1, m, n, N, dp);
+        return dp[i][j] = flag1 || flag2;
     }
     
     public boolean isInterleave(String s1, String s2, String s3) {
