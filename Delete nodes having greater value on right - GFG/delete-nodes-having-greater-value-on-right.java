@@ -83,34 +83,17 @@ class Solution
     Node compute(Node head)
     {
         // your code here
-        Node h = null;
-        Node p = null;
-        Node curr1 = head;
-        Node curr2 = head;
-        while(curr1!=null){
-            curr2 = curr1.next;
-            boolean flag = true;
-            while(curr2!=null) {
-                if(curr2.data>curr1.data) {
-                    flag = false;
-                    break;
-                }
-                curr2 = curr2.next;
+        Node temp=head;
+        while(temp.next!=null)
+        {
+            if(temp.data<temp.next.data){
+              temp.data=temp.next.data;
+              temp.next=temp.next.next;
+              temp=head;
             }
-            if(flag == true){
-                Node ele = new Node(curr1.data);
-                if(h == null) {
-                    h = ele;
-                    p = ele;
-                } 
-                else{
-                    p.next = ele;
-                    p = p.next;
-                }
-            }
-            curr1= curr1.next;
+            else temp=temp.next;
         }
-        return h;
+        return head; 
     }
 }
   
