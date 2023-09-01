@@ -126,7 +126,6 @@ class Solution{
         //code here  
         Queue<Pair> q=new LinkedList<>();
         q.offer(new Pair(node,1));
-        //PriorityQueue<Integer> pq=new PriorityQueue<>();
         int count=0;
         while(!q.isEmpty()){
             int n=q.size();
