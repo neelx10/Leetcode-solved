@@ -126,26 +126,22 @@ class Solution{
         //code here  
         Queue<Pair> q=new LinkedList<>();
         q.offer(new Pair(node,1));
-        PriorityQueue<Integer> pq=new PriorityQueue<>();
-        
+        //PriorityQueue<Integer> pq=new PriorityQueue<>();
+        int count=0;
         while(!q.isEmpty()){
             int n=q.size();
             while(n-- > 0){
                 Pair temp=q.poll();
-                if(temp.node.left==null && temp.node.right==null) pq.offer(temp.level);
+                if(temp.node.left==null && temp.node.right==null){
+                    if(bud-temp.level>=0) bud-=temp.level;
+                    else return count;
+                    count++;
+                }
                 else{
                     if(temp.node.left!=null) q.offer(new Pair(temp.node.left,temp.level+1));
                     if(temp.node.right!=null) q.offer(new Pair(temp.node.right,temp.level+1));
                 }
             }
-        }
-        
-        int count=0;
-        while(!pq.isEmpty()){
-            int temp=pq.poll();
-            if(bud-temp>=0) bud-=temp;
-            else return count;
-            count++;
         }
         return count;
     }
