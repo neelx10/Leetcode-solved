@@ -5,9 +5,10 @@ class Solution {
         for(int i=0;i<groupSizes.length;i++){
             int temp=groupSizes[i];
             if(!map.containsKey(temp)) map.put(temp,new ArrayList<>());
-            map.get(temp).add(i);
-            if(map.get(temp).size()==temp){
-                ans.add(map.get(temp));
+            List<Integer> list=map.get(temp);
+            list.add(i);
+            if(list.size()==temp){
+                ans.add(list);
                 map.remove(temp);
             }
         }
