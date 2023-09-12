@@ -5,11 +5,12 @@ class Solution {
         for (char c : s.toCharArray()) freq[c - 'a']++;
         int count = 0;
         for (int i = 0; i < 26; i++) {
-            while (freq[i] != 0 && set.contains(freq[i])) {
-                freq[i]--;
+            int temp=freq[i];
+            while (temp != 0 && set.contains(temp)) {
+                temp--;
                 count++;
             }
-            if (freq[i] != 0) set.add(freq[i]);
+            if (temp != 0) set.add(temp);
         }
         return count;
     }
