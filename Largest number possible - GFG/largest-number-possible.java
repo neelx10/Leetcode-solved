@@ -30,17 +30,9 @@ class Solution{
         StringBuilder ans = new StringBuilder();
         if(S == 0 && N > 1) return "-1";
         for(int i = 0; i < N; i++){
-            if(S > 9){
-                ans.append(9);
-                S = S - 9;
-            }
-            else{
-                if(S > 0){
-                    ans.append(S);
-                    S = 0;
-                }
-                else ans.append(0);
-            }
+            int digit=Math.min(S,9);
+            ans.append(digit);
+            S-=digit;
         }
         if(S != 0) return "-1";
         return ans.toString();
