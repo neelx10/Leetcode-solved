@@ -1,39 +1,26 @@
-class DisjointSet{
-    static int[] parent;
-    static int[] rank;
-    DisjointSet(int V){
-        parent=new int[V+1];
-        rank=new int[V+1];
-        for(int i=0;i<=V;i++) parent[i]=i;
-    }
-    static int findParent(int node){
-        if(node==parent[node]) return node;
-        return parent[node]=findParent(parent[node]);
-    }
-    static void unionByRank(int u,int v){
-        int u_parent=findParent(u);
-        int v_parent=findParent(v);
-        if(rank[u_parent]>rank[v_parent]) parent[v_parent]=u_parent;
-        else if(rank[u_parent]<rank[v_parent]) parent[u_parent]=v_parent;
-        else{
-            parent[v_parent]=u_parent;
-            rank[u_parent]++;
-        }
-    }
-}
-
 class Solution {
     public int spanningTree(int V, int edges[][]){
 	    // Code Here.
-	    DisjointSet set=new DisjointSet(V);
-	    int sum=0;
-	    for(int[] edge:edges){
-	        if(set.findParent(edge[0])!=set.findParent(edge[1])){
-	            sum+=edge[2];
-	            set.unionByRank(edge[0],edge[1]);
-	        }
-	    }
-	    return sum;
+	    ArrayList<ArrayList<int[]>> adj=new ArrayList<>();
+        for(int i=0;i<V;i++) adj.add(new ArrayList<>());
+        for(int i=0;i<edges.length;i++){
+            adj.get(edges[i][0]).add(new int[]{edges[i][1],edges[i][2]});
+            adj.get(edges[i][1]).add(new int[]{edges[i][0],edges[i][2]});
+        }
+	    int[] visited=new int[V];
+        int sum=0;
+        PriorityQueue<int[]> pq=new PriorityQueue<>((x,y)->x[0]-y[0]);
+        pq.offer(new int[]{0,0});
+        while(!pq.isEmpty()){
+            int[] it=pq.poll();
+            int distance=it[0];
+            int node=it[1];
+            if(visited[node]==1) continue;
+            visited[node]=1;
+            sum+=distance;
+            for(int[] temp:adj.get(node)) pq.offer(new int[]{temp[1],temp[0]});
+        }
+        return sum;
 	}
     
     public int minCostConnectPoints(int[][] points) {
@@ -46,7 +33,6 @@ class Solution {
                 edges[k++]=new int[]{i,j,dist};
             }
         }
-        Arrays.sort(edges,(a,b)->a[2]-b[2]);
         return spanningTree(V,edges);
     }
 }
