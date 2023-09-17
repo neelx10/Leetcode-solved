@@ -4,7 +4,6 @@ class Solution {
         int allVisitedMask = (1 << numNodes) - 1;
         Queue<int[]> q = new LinkedList<>();
         boolean[][] visited = new boolean[allVisitedMask + 1][numNodes];
-        for (boolean[] row : visited) Arrays.fill(row, false);
         for (int node = 0; node < numNodes; ++node) {
             int initialMask = (1 << node);
             q.add(new int[] { node, initialMask, 1 });
