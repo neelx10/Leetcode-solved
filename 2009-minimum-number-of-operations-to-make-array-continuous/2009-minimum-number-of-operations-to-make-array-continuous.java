@@ -1,15 +1,4 @@
 class Solution {
-    public int binarySearch(int[] newNums, int target) {
-        int left = 0;
-        int right = newNums.length;
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (target < newNums[mid]) right = mid;
-            else left = mid + 1;
-        }
-        return left;
-    }
-    
     public int minOperations(int[] nums) {
         int n = nums.length;
         int ans = n;
@@ -19,11 +8,10 @@ class Solution {
         int index = 0;
         for (int num : unique) newNums[index++] = num;
         Arrays.sort(newNums);
+        int j = 0;
         for (int i = 0; i < newNums.length; i++) {
-            int left = newNums[i];
-            int right = left + n - 1;
-            int j = binarySearch(newNums, right);
-            ans = Math.min(ans, n - j + i);
+            while (j < newNums.length && newNums[j] < newNums[i] + n) j++;
+            ans = Math.min(ans, n-j+i);
         }
         return ans;
     }
