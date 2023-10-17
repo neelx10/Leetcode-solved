@@ -16,9 +16,7 @@ public:
             for(int i=0;i<n;i++) {
                 for(int j=0;j<n;j++) {
                     if(i==j) grid[i][j] = 1;
-                    if(grid[i][j]==0) {
-                        if(grid[i][k]==1 && grid[k][j]==1) grid[i][j]=1;
-                    }
+                    else if(grid[i][j]==0 && grid[i][k]==1 && grid[k][j]==1) grid[i][j]=1;
                 }
             }
         }
