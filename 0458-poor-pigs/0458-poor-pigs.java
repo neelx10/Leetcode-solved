@@ -1,10 +1,7 @@
 class Solution {
-    public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
-        int testsPerPig = minutesToTest / minutesToDie,numPigs = 0, states = 1; // Number of unique states a pig can represent 
-        while (states < buckets) {
-            states *= (testsPerPig + 1);
-            numPigs++;
-        }
-        return numPigs;
+    public int poorPigs(int buckets, int timeDie, int timeTest) {
+        int test = timeTest/timeDie,i=0;
+        while(Math.pow(test+1,i)< buckets) i++;
+        return i;
     }
 }
