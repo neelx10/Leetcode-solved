@@ -4,7 +4,7 @@ class Solution {
     }
 
     public String sortVowels(String s) {
-        int[] count = new int[54];
+        int[] count = new int[53];
         for (char c : s.toCharArray()) {
             if (isVowel(c)) count[c - 'A']++;
         }
