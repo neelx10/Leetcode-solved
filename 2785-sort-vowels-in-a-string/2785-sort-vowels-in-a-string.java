@@ -2,18 +2,22 @@ class Solution {
     boolean isVowel(Character c) {
         return c == 'a' || c == 'e' || c == 'o'|| c == 'u'|| c == 'i' || c == 'A' || c == 'E' || c == 'O'|| c == 'U'|| c == 'I';
     }
-    
+
     public String sortVowels(String s) {
-        ArrayList<Character> temp = new ArrayList<>();
+        int[] count = new int[58];
         for (char c : s.toCharArray()) {
-            if (isVowel(c)) temp.add(c);
+            if (isVowel(c)) count[c - 'A']++;
         }
-        Collections.sort(temp);
+        String sortedVowel = "AEIOUaeiou";
         StringBuilder ans = new StringBuilder();
         int j = 0;
         for (int i = 0; i < s.length(); i++) {
-            if (isVowel(s.charAt(i))) ans.append(temp.get(j++));
-            else ans.append(s.charAt(i));
+            if (!isVowel(s.charAt(i))) ans.append(s.charAt(i));
+            else{
+                while (count[sortedVowel.charAt(j) - 'A'] == 0) j++;
+                ans.append(sortedVowel.charAt(j));
+                count[sortedVowel.charAt(j) - 'A']--;
+            }
         }
         return ans.toString();
     }
