@@ -1,15 +1,26 @@
 class Solution {
     public int garbageCollection(String[] garbage, int[] travel) {
-        int len = garbage.length;
-        int res = 0;
-        Set<Character> s = new HashSet<>();
-        for (int i = len - 1; i >= 0 ; i--) {
-            for (char ch : garbage[i].toCharArray()) {
-                if (!s.contains(ch)) s.add(ch);
+        int time = 0;
+        int gt = 0, mt = 0, pt = 0, d = 0;
+        for (int i = 0; i < garbage.length; i++) {
+            String s = garbage[i];
+            time += s.length();
+            if (i > 0) {
+                d += travel[i - 1];
+                if (s.contains("G")) {
+                    time += d - gt;
+                    gt = d;
+                }
+                if (s.contains("M")) {
+                    time += d - mt;
+                    mt = d;
+                }
+                if (s.contains("P")) {
+                    time += d - pt;
+                    pt = d;
+                }
             }
-            res += garbage[i].length();
-            res += i > 0 ? s.size() * travel[i - 1] : 0;
         }
-        return res;
+        return time;
     }
 }
