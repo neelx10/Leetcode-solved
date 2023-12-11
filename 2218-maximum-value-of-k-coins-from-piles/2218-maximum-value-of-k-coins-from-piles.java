@@ -5,9 +5,9 @@ class Solution {
             for(int K=0;K<=k;K++){
                 int notTake=dp[i+1][K];
                 int sum=0,take=(int)-1e9;
-                for(int j=0;j<piles.get(i).size();j++){
+                for(int j=0;j<Math.min(K,piles.get(i).size());j++){
                     sum+=piles.get(i).get(j);
-                    if(K>=(j+1)) take=Math.max(take,sum+dp[i+1][K-(j+1)]);
+                    take=Math.max(take,sum+dp[i+1][K-(j+1)]);
                 }
                 dp[i][K]=Math.max(take,notTake);
             }
