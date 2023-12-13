@@ -14,9 +14,9 @@ class Solution {
         }
         int ans = 0;
         for (int row = 0; row < m; row++) {
-            for (int col = 0; col < n; col++) {
-                if (mat[row][col] == 1) {
-                    if (rowCount[row] == 1 && colCount[col] == 1) ans++;
+            if(rowCount[row]==1){
+                for (int col = 0; col < n; col++){
+                    if (mat[row][col]==1 && colCount[col] == 1) ans++;
                 }
             }
         }
