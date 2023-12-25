@@ -1,15 +1,14 @@
 class Solution {
     public int numDecodings(String s) {
         int n=s.length();
-        int[] dp=new int[n+1];
-        dp[n]=1;
+        int next1=1,next2=0;
         for(int i=n-1;i>=0;i--){
-            if(!(s.charAt(i)=='0')){
-                int ways=dp[i+1];
-                if(i<s.length()-1 && (s.charAt(i) == '1' || (s.charAt(i) == '2' && s.charAt(i+1) <= '6'))) ways+=dp[i+2];
-                dp[i]=ways;
-            }
+            int curr=next1;
+            if(i<s.length()-1 && (s.charAt(i) == '1' || (s.charAt(i) == '2' && s.charAt(i+1) <= '6'))) curr+=next2;
+            if(s.charAt(i)=='0') curr=0;
+            next2=next1;
+            next1=curr;
         }
-        return dp[0];
+        return next1;
     }
 }
