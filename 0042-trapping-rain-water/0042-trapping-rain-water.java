@@ -1,14 +1,26 @@
 class Solution {
-    public int trap(int[] arr) {
-        int n=arr.length;
-        int[] prefix=new int[n];
-        int[] suffix=new int[n];
-        prefix[0]=arr[0];
-        for(int i=1;i<n;i++) prefix[i]=Math.max(prefix[i-1],arr[i]);
-        suffix[n-1]=arr[n-1];
-        for(int i=n-2;i>=0;i--) suffix[i]=Math.max(suffix[i+1],arr[i]);
-        int sum=0;
-        for(int i=0;i<n;i++) sum+=Math.min(prefix[i],suffix[i])-arr[i];
-        return sum;
+    public int trap(int[] height) {
+        int left = 0; // left pointer
+        int right = height.length-1; // right pointer
+        
+        int leftMax = height[left];
+        int rightMax = height[right];
+        
+        int totalTrappedWater = 0;
+        while(left < right) {
+            
+            // check which pointer value is minimum
+            if(height[left] < height[right]){
+                left++;
+                leftMax = Math.max(leftMax, height[left]);
+                totalTrappedWater += leftMax - height[left];
+            }
+            else{
+                right--;
+                rightMax = Math.max(rightMax, height[right]);
+                totalTrappedWater += rightMax - height[right];
+            }
+        }
+        return totalTrappedWater;
     }
 }
